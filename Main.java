@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 // Import list array to easily get, add, delete, update data
@@ -10,6 +14,10 @@ class Main {
     private static String color;
     private static int year;
     private static int mileage;
+    static boolean exit = false;
+    static ArrayList<String> carStrings = new ArrayList<String>();
+    static ArrayList<Integer> carInts = new ArrayList<Integer>();
+    static Map<String, List> listMap = new HashMap<String, List>();
 
     public static void main(String[] string) {
         try (Scanner scnr = new Scanner(System.in)) {
@@ -19,20 +27,34 @@ class Main {
             System.out.println(" To add a vehicle input: -add");
             System.out.println(" To delete a vehicle input: -del");
             System.out.println(" To update a vehicle input: -upd");
+            System.out.println(" To get the vehicles list: -get");
+            System.out.println(" To exit the program : -exit");
             command = scnr.nextLine();
-            switch (command) {
-                case "-add":
-                    addVehicle();
-                    System.out.print(addVehicle());
-                    break;
-                case "-del":
-                    deleteVehicle();
-                    break;
-                case "-upd":
-                    updateVehicle();
-                    break;
+
+            while (true) {
+                if (scnr.equals("-exit")) {
+                    System.out.println("Thanks for using my programe");
+                    System.exit(0);
+                }
+                switch (command) {
+                    case "-add":
+                        addVehicle();
+
+                        break;
+                    case "-del":
+                        deleteVehicle();
+                        break;
+                    case "-upd":
+                        updateVehicle();
+                        break;
+                    case "-get":
+                        getVehicle();
+                        break;
+
+                }
 
             }
+
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
@@ -54,6 +76,13 @@ class Main {
             year = scnr.nextInt();
             System.out.println("add mileage");
             mileage = scnr.nextInt();
+            carStrings.add(make);
+            carStrings.add(model);
+            carStrings.add(color);
+            carInts.add(year);
+            carInts.add(mileage);
+            listMap.put("strings", carStrings);
+            listMap.put("integers", carInts);
 
         } catch (Exception e) {
 
@@ -64,9 +93,10 @@ class Main {
 
     }
 
-    public void getVehicle() {
+    public static void getVehicle() {
         // this method will display all vehivles currently listed in the array
-        System.out.println("add");
+        listMap.get("strings").add("value");
+        listMap.get("integers").add(new Integer(10));
     }
 
     public static void deleteVehicle() {
