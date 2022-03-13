@@ -46,13 +46,13 @@ class Main {
         try (Scanner scnr = new Scanner(System.in)) {
             System.out.println("add car make");
             make = scnr.nextLine();
-            System.out.println("type model");
+            System.out.println("add model");
             model = scnr.nextLine();
-            System.out.println("type color");
+            System.out.println("add color");
             color = scnr.nextLine();
-            System.out.println("type year");
+            System.out.println("add year");
             year = scnr.nextInt();
-            System.out.println("type mileage");
+            System.out.println("add mileage");
             mileage = scnr.nextInt();
 
         } catch (Exception e) {
