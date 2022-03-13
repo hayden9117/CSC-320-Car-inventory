@@ -60,7 +60,7 @@ class Main {
             System.out.print(e.getMessage());
 
         }
-        return "successfully added" + make + model + color + year + mileage;
+        return "successfully added :" + make + " " + model + " " + color + " " + year + " " + mileage;
 
     }
 
