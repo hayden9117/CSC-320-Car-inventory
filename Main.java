@@ -7,96 +7,103 @@ import java.util.Scanner;
 // Import list array to easily get, add, delete, update data
 class Main {
     // instantiate the variables ill be using
-
-    private static String command;
-    private static String make;
-    private static String model;
-    private static String color;
-    private static int year;
-    private static int mileage;
-    static boolean exit = false;
-    static ArrayList<String> carStrings = new ArrayList<String>();
-    static ArrayList<Integer> carInts = new ArrayList<Integer>();
-    static Map<String, List> listMap = new HashMap<String, List>();
+    static Scanner scnr = new Scanner(System.in);
+    static String userInput;
 
     public static void main(String[] string) {
-        try (Scanner scnr = new Scanner(System.in)) {
-            System.out.println(
-                    "Welcome to Richies automobile inventory tracker! please see the following list of commands you can use to interact with the inventory.");
-            System.out.println(" ");
-            System.out.println(" To add a vehicle input: -add");
-            System.out.println(" To delete a vehicle input: -del");
-            System.out.println(" To update a vehicle input: -upd");
-            System.out.println(" To get the vehicles list: -get");
-            System.out.println(" To exit the program : -exit");
-            command = scnr.nextLine();
+        final String exit = "-exit";
+        final String command = "-add, -del, -get, -upt";
+        final int elements = 10;
+        ArrayList<String> make = new ArrayList<String>(elements);
+        ArrayList<String> model = new ArrayList<String>(elements);
+        ArrayList<String> color = new ArrayList<String>(elements);
+        ArrayList<String> year = new ArrayList<String>(elements);
+        ArrayList<String> mileage = new ArrayList<String>(elements);
+        System.out.println(
+                "Welcome to Richies automobile inventory tracker! please see the following list of commands you can use to interact with the inventory.");
+        System.out.println(" ");
+        System.out.println(" To add a vehicle input: -add");
+        System.out.println(" To delete a vehicle input: -del");
+        System.out.println(" To update a vehicle input: -upd");
+        System.out.println(" To get the vehicles list: -get");
+        System.out.println(" To exit the program : -exit");
 
-            while (true) {
-                if (scnr.equals("-exit")) {
-                    System.out.println("Thanks for using my programe");
-                    System.exit(0);
-                }
-                switch (command) {
-                    case "-add":
-                        addVehicle();
+        userInput = getInput(command);
+        while (userInput != exit) {
+            if (userInput.equals("-add")) {
 
-                        break;
-                    case "-del":
-                        deleteVehicle();
-                        break;
-                    case "-upd":
-                        updateVehicle();
-                        break;
-                    case "-get":
-                        getVehicle();
-                        break;
+                addVehicle(make, model, color, year, mileage);
 
-                }
+            } else if (userInput.equals("-del")) {
+                deleteVehicle();
+
+            } else if (userInput.equals("-get")) {
+                getVehicle(make, model, color, year, mileage);
+
+            } else if (userInput.equals("-upt")) {
+                updateVehicle();
 
             }
-
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-
+            userInput = getInput(command);
         }
 
     }
 
-    public static String addVehicle() {
+    public static void addVehicle(
+            ArrayList<String> make,
+            ArrayList<String> model,
+            ArrayList<String> color,
+            ArrayList<String> year,
+            ArrayList<String> mileage) {
+        String addMake;
+        String addModel;
+        String addColor;
+        String addYear;
+        String addMileage;
 
-        try (Scanner scnr = new Scanner(System.in)) {
-            System.out.println("add car make");
-            make = scnr.nextLine();
-            System.out.println("add model");
-            model = scnr.nextLine();
-            System.out.println("add color");
-            color = scnr.nextLine();
-            System.out.println("add year");
-            year = scnr.nextInt();
-            System.out.println("add mileage");
-            mileage = scnr.nextInt();
-            carStrings.add(make);
-            carStrings.add(model);
-            carStrings.add(color);
-            carInts.add(year);
-            carInts.add(mileage);
-            listMap.put("strings", carStrings);
-            listMap.put("integers", carInts);
+        System.out.println("\nEnter the make of the vehicle: ");
+        addMake = scnr.nextLine();
+        System.out.println("Enter the model: ");
+        addModel = scnr.nextLine();
+        System.out.println("Enter the color: ");
+        addColor = scnr.nextLine();
+        System.out.println("Enter the year: ");
+        addYear = scnr.nextLine();
+        System.out.println("Enter the mileage: ");
+        addMileage = scnr.nextLine();
 
-        } catch (Exception e) {
+        make.add(addMake);
+        model.add(addModel);
+        color.add(addColor);
+        year.add(addYear);
+        mileage.add(addMileage);
 
-            System.out.print(e.getMessage());
-
-        }
-        return "successfully added :" + make + " " + model + " " + color + " " + year + " " + mileage;
-
+        System.out.println("vehicles information has been added.");
     }
 
-    public static void getVehicle() {
-        // this method will display all vehivles currently listed in the array
-        listMap.get("strings").add("value");
-        listMap.get("integers").add(new Integer(10));
+    public static void getVehicle(ArrayList<String> make,
+            ArrayList<String> model,
+            ArrayList<String> color,
+            ArrayList<String> year,
+            ArrayList<String> mileage) {
+        int length;
+        int i;
+
+        length = make.size();
+        if (length > 0) {
+            System.out.println();
+            for (i = 0; i < length; ++i) {
+                System.out.println(i + ") Make: " + make.get(i) +
+                        ",\tModel: " + model.get(i) +
+                        ",\tColor: " + color.get(i) +
+                        ",\tYear: " + year.get(i) +
+                        ",\tMileage: " + mileage.get(i));
+
+            }
+        } else {
+            System.out.println("\nNo vehicles in inventory.");
+        }
+
     }
 
     public static void deleteVehicle() {
@@ -108,4 +115,15 @@ class Main {
         // this method will update a vehicles data
         System.out.println("update");
     }
+
+    public static String getInput(String prompt) {
+        String answer;
+
+        System.out.println();
+        System.out.println(prompt);
+        answer = scnr.nextLine();
+
+        return answer;
+    }
+
 }
