@@ -35,7 +35,7 @@ class Main {
                 addVehicle(make, model, color, year, mileage);
 
             } else if (userInput.equals("-del")) {
-                deleteVehicle();
+                deleteVehicle(make, model, color, year, mileage);
 
             } else if (userInput.equals("-get")) {
                 getVehicle(make, model, color, year, mileage);
@@ -106,9 +106,46 @@ class Main {
 
     }
 
-    public static void deleteVehicle() {
+    public static void deleteVehicle(ArrayList<String> make,
+            ArrayList<String> model,
+            ArrayList<String> color,
+            ArrayList<String> year,
+            ArrayList<String> mileage) {
         // this method will remove vehicles from the array
-        System.out.println("del");
+        int length;
+        int index;
+        int i;
+
+        length = make.size();
+
+        if (length > 0) {
+            System.out.println();
+            for (i = 0; i < length; ++i) {
+                System.out.println("\n input the index to delete the element." +
+                        i + ") Make: " + make.get(i) +
+                        ",\tModel: " + model.get(i) +
+                        ",\tColor: " + color.get(i) +
+                        ",\tYear: " + year.get(i) +
+                        ",\tMileage: " + mileage.get(i));
+
+            }
+        } else {
+            System.out.println("\nNo vehicles in inventory to delete.");
+        }
+
+        index = scnr.nextInt();
+
+        if (length > 0) {
+            System.out.println();
+            for (i = 0; i < length; ++i) {
+                make.remove(index);
+                model.remove(index);
+                color.remove(index);
+                year.remove(index);
+                mileage.remove(index);
+
+            }
+        }
     }
 
     public static void updateVehicle() {
