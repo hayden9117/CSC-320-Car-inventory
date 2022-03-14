@@ -1,0 +1,5 @@
+0) Make: nissan,
+Model: Gtr,
+Color: red,
+Year: 2015,
+Mileage: 35432

@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 // Import list array to easily get, add, delete, update data
 class Main {
@@ -12,7 +12,7 @@ class Main {
 
     public static void main(String[] string) {
         final String exit = "-exit";
-        final String command = "-add, -del, -get, -upt";
+        final String command = "-add, -del, -get, -upt, -exit";
         final int elements = 10;
         ArrayList<String> make = new ArrayList<String>(elements);
         ArrayList<String> model = new ArrayList<String>(elements);
@@ -41,8 +41,10 @@ class Main {
                 getVehicle(make, model, color, year, mileage);
 
             } else if (userInput.equals("-upt")) {
-                updateVehicle();
+                updateVehicle(make, model, color, year, mileage);
 
+            } else if (userInput.equals("-exit")) {
+                exit(make, model, color, year, mileage);
             }
             userInput = getInput(command);
         }
@@ -135,22 +137,73 @@ class Main {
 
         index = scnr.nextInt();
 
+        System.out.println();
+
+        make.remove(index);
+        model.remove(index);
+        color.remove(index);
+        year.remove(index);
+        mileage.remove(index);
+
+    }
+
+    public static void updateVehicle(ArrayList<String> make,
+            ArrayList<String> model,
+            ArrayList<String> color,
+            ArrayList<String> year,
+            ArrayList<String> mileage) {
+        String setMake;
+        String setModel;
+        String setColor;
+        String setYear;
+        String setMileage;
+        int length;
+        int index;
+        int i;
+
+        length = make.size();
+
         if (length > 0) {
             System.out.println();
             for (i = 0; i < length; ++i) {
-                make.remove(index);
-                model.remove(index);
-                color.remove(index);
-                year.remove(index);
-                mileage.remove(index);
+                System.out.println(
+                        i + ") Make: " + make.get(i) +
+                                ",\tModel: " + model.get(i) +
+                                ",\tColor: " + color.get(i) +
+                                ",\tYear: " + year.get(i) +
+                                ",\tMileage: " + mileage.get(i));
+
+            }
+        } else {
+            System.out.println("\nNo vehicles in inventory to delete.");
+        }
+
+        System.out.println("Enter the index of the vehicle that you want to update: ");
+        index = scnr.nextInt();
+        System.out.println("\n");
+        scnr.nextLine();
+        System.out.println("Enter the make of the vehicle that you want to update: ");
+        setMake = scnr.nextLine();
+        System.out.println("Enter the model: ");
+        setModel = scnr.nextLine();
+        System.out.println("Enter the color: ");
+        setColor = scnr.nextLine();
+        System.out.println("Enter the year: ");
+        setYear = scnr.nextLine();
+        System.out.println("Enter the mileage: ");
+        setMileage = scnr.nextLine();
+
+        if (length > 0) {
+            System.out.println();
+            for (i = 0; i < length; ++i) {
+                make.set(index, setMake);
+                model.set(index, setModel);
+                color.set(index, setColor);
+                year.set(index, setYear);
+                mileage.set(index, setMileage);
 
             }
         }
-    }
-
-    public static void updateVehicle() {
-        // this method will update a vehicles data
-        System.out.println("update");
     }
 
     public static String getInput(String prompt) {
@@ -161,6 +214,54 @@ class Main {
         answer = scnr.nextLine();
 
         return answer;
+    }
+
+    public static void exit(ArrayList<String> make,
+            ArrayList<String> model,
+            ArrayList<String> color,
+            ArrayList<String> year,
+            ArrayList<String> mileage) {
+        String input;
+        int length;
+        int i;
+        length = make.size();
+        System.out.println("would you like to print inventory added to a tect document? (y/n)");
+        input = scnr.nextLine();
+
+        switch (input) {
+            case "y":
+                try {
+                    File myObj = new File("/Users/richie/portfolio-project/inventory/inventory.txt");
+                    if (myObj.createNewFile()) {
+                        try (FileWriter myWriter = new FileWriter(
+                                "/Users/richie/portfolio-project/inventory/inventory.txt")) {
+                            for (i = 0; i < length; ++i) {
+                                myWriter.write(
+                                        i + ") Make: " + make.get(i) +
+                                                ",\nModel: " + model.get(i) +
+                                                ",\nColor: " + color.get(i) +
+                                                ",\nYear: " + year.get(i) +
+                                                ",\nMileage: " + mileage.get(i));
+
+                            }
+                        }
+                        System.out.println("File created: " + myObj.getName());
+
+                        // /Users/richie/portfolio-project/inventory
+
+                    } else {
+                        System.out.println("File already exists.");
+                    }
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+                break;
+            case "n":
+                System.exit(0);
+                break;
+        }
+
     }
 
 }
