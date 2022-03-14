@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 
-// Import list array to easily get, add, delete, update data
 class Main {
-    // instantiate the variables ill be using
+
     static Scanner scnr = new Scanner(System.in);
     static String userInput;
+
+    Main(String userInput, Scanner scnr) {
+        Main.userInput = userInput;
+        Main.scnr = scnr;
+    }
 
     public static void main(String[] string) {
         final String exit = "-exit";
